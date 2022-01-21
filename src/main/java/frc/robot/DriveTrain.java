@@ -29,6 +29,25 @@ public class DriveTrain extends Subsystem {
       SmartDashboard.putNumber("ySpeed", ySpeed);
       SmartDashboard.putNumber("zRotation", zRotation);
     }
+
+    public void resetdistancetraveled(){
+     // offset = /*insertmotorwithencoder*/.getSensorCollection().getQuadraturePosition();
+    }
+
+   /* public double getdistancetraveled(){
+      int realencoderticks = /insertmotorwithencoder/.getSensorCollection().getQuadraturePosition();
+      fakeencoderticks = realencoderticks - offset
+      double inches = fakeencoderticks * 0.004601
+     SmartDashboard.putNumber("Distance Traveled", inches);
+   
+     return inches;
+    
+    } */
+
+    public void DistanceDistance(){
+      
+    }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

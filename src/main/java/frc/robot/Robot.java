@@ -5,8 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.command.Command;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -26,6 +27,8 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+  private Command autonomousCommand;
   public static DriveTrain drivetrain;
   PIDController VisionPIDController = new PIDController(0, 0, 0);
   public static PigeonIMU pigeon;
@@ -40,6 +43,10 @@ public class Robot extends TimedRobot {
     m_DriveControl = new Joystick(0);
     m_DriveControl.setYChannel(1);
     m_DriveControl.setZChannel(2);
+
+    SmartDashboard.putData("Autos", m_chooser);
+
+    //m_chooser.setDefaultOption(name, object);
   }
 
   
