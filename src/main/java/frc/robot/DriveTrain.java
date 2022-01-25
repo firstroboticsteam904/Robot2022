@@ -6,8 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -17,10 +17,10 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
     private WPI_TalonSRX m_left0 = new WPI_TalonSRX(1);
     private WPI_TalonSRX m_left1 = new WPI_TalonSRX(2);
-    private SpeedControllerGroup m_left = new SpeedControllerGroup(m_left0, m_left1);
+    private MotorControllerGroup m_left = new MotorControllerGroup(m_left0, m_left1);
     private WPI_TalonSRX m_right0 = new WPI_TalonSRX(3);
     private WPI_TalonSRX m_right1 = new WPI_TalonSRX(4);
-    private SpeedControllerGroup m_right = new SpeedControllerGroup(m_right0, m_right1);
+    private MotorControllerGroup m_right = new MotorControllerGroup(m_right0, m_right1);
     private DifferentialDrive m_myDrivetrain = new DifferentialDrive(m_left, m_right);
     private int offset;
 

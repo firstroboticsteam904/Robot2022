@@ -38,9 +38,9 @@ public class Robot extends TimedRobot {
   private Joystick m_DriveControl;
   private Joystick m_OperateControl;
   double deadzone = .25;
-  DoubleSolenoid exampleDoublePCM = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 2);
 
- 
+  Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+ private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
   @Override
   public void robotInit() {
@@ -51,11 +51,11 @@ public class Robot extends TimedRobot {
     m_DriveControl = new Joystick(0);
     m_DriveControl.setYChannel(1);
     m_DriveControl.setZChannel(2);
-
+    pcmCompressor.enableDigital();
+    solenoid.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
 
 
-    exampleDoublePCM.set(kReverse);
     //m_chooser.setDefaultOption(name, object);
   }
 
@@ -119,14 +119,14 @@ public class Robot extends TimedRobot {
       VisionPIDController.reset();
         }
 
-    if (m_OperateControl.getRawButton(1)){
+    if (m_OperateControl.getRawButtonPressed(5)){
       rackmotor.RackIntakeFR(1);
       rackmotor.RackIntakeBK(1);
-      exampleDoublePCM.toggle();
-    } else{
+      solenoid.toggle();
+    } else if (m_OperateControl.getRawButtonPressed(7)){
       rackmotor.RackIntakeFR(0);
       rackmotor.RackIntakeBK(0);
-
+      solenoid.toggle();
     }
   }
 
