@@ -10,11 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.PigeonIMU;
-
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,14 +32,20 @@ public class Robot extends TimedRobot {
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
   private Command autonomousCommand;
   public static DriveTrain drivetrain;
+  public static RackMotor rackmotor;
   PIDController VisionPIDController = new PIDController(0, 0, 0);
   public static PigeonIMU pigeon;
   private Joystick m_DriveControl;
+  private Joystick m_OperateControl;
   double deadzone = .25;
+  DoubleSolenoid exampleDoublePCM = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 2);
+
+ 
 
   @Override
   public void robotInit() {
     drivetrain = new DriveTrain();
+    rackmotor = new RackMotor();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     m_DriveControl = new Joystick(0);
@@ -46,6 +54,8 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("Autos", m_chooser);
 
+
+    exampleDoublePCM.set(kReverse);
     //m_chooser.setDefaultOption(name, object);
   }
 
@@ -108,7 +118,20 @@ public class Robot extends TimedRobot {
       drivetrain.arcadeDrive(throttledeadzone, pivitdeadzone);
       VisionPIDController.reset();
         }
+
+    if (m_OperateControl.getRawButton(1)){
+      rackmotor.RackIntakeFR(1);
+      rackmotor.RackIntakeBK(1);
+      exampleDoublePCM.toggle();
+    } else{
+      rackmotor.RackIntakeFR(0);
+      rackmotor.RackIntakeBK(0);
+
+    }
   }
+
+
+
 
   @Override
   public void disabledInit() {}
