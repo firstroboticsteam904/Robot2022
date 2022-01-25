@@ -4,11 +4,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+
 
 /** Add your docs here. */
 public class RackMotor extends Subsystem {
