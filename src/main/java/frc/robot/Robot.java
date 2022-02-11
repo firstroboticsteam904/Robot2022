@@ -30,12 +30,13 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-  private Command autonomousCommand;
+ // private Command autonomousCommand;
   public static DriveTrain drivetrain;
   public static RackMotor rackmotor;
   PIDController VisionPIDController = new PIDController(0, 0, 0);
   public static PigeonIMU pigeon;
   private Joystick m_DriveControl;
+ // private Joystick XboxCont;
   private Joystick m_OperateControl;
   double deadzone = .25;
 
@@ -51,6 +52,8 @@ public class Robot extends TimedRobot {
     m_DriveControl = new Joystick(0);
     m_DriveControl.setYChannel(1);
     m_DriveControl.setZChannel(2);
+   // XboxCont.setYChannel(1);  //???? Look @ me
+   // XboxCont.setXChannel(4);
     pcmCompressor.enableDigital();
     solenoid.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
@@ -77,6 +80,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double throttledeadzone; /*forward/backward deadzone*/
     double pivitdeadzone; /*rotation deadzone*/
+ //   double Ydeadzonedrive;
+  //  double Xdeadzonedrive;
 
 
     if(Math.abs(m_DriveControl.getY())>deadzone) {
@@ -90,7 +95,19 @@ public class Robot extends TimedRobot {
     } else{
       pivitdeadzone = 0;
     }
+    /*if(Math.abs(XboxCont.getY())>deadzone) {
+      Ydeadzonedrive = Math.pow(m_DriveControl.getY(), 3);
+    }else {
+      Ydeadzonedrive = 0;
+    }
+    
+    if(Math.abs(XboxCont.getX())>deadzone) {
+      Xdeadzonedrive = Math.pow(m_DriveControl.getX(), 3);
+    }else {
+      Xdeadzonedrive = 0;
+    }*/
 
+    //Adding Data to smart dashboard
     double [] ypr_deg = new double[3];
     ErrorCode pigeonResult = pigeon.getYawPitchRoll(ypr_deg);
     PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
@@ -137,8 +154,10 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
-
+  public void disabledPeriodic() {
+  NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);}
+  
   @Override
   public void testInit() {}
 
