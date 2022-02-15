@@ -38,10 +38,10 @@ public class Robot extends TimedRobot {
   private Joystick m_DriveControl;
  // private Joystick XboxCont;
   private Joystick m_OperateControl;
-  double deadzone = .25;
+  double deadzone = .30;
 
-  Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
- private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+ // Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+ //private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
   @Override
   public void robotInit() {
@@ -50,12 +50,12 @@ public class Robot extends TimedRobot {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     m_DriveControl = new Joystick(0);
-    m_DriveControl.setYChannel(1);
-    m_DriveControl.setZChannel(2);
+    m_DriveControl.setYChannel(2);
+    m_DriveControl.setXChannel(1);
    // XboxCont.setYChannel(1);  //???? Look @ me
    // XboxCont.setXChannel(4);
-    pcmCompressor.enableDigital();
-    solenoid.set(kForward);
+   // pcmCompressor.enableDigital();
+    //solenoid.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
 
 
@@ -78,8 +78,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    drivetrain.arcadeDrive(m_DriveControl.getY(), m_DriveControl.getX());
     double throttledeadzone; /*forward/backward deadzone*/
-    double pivitdeadzone; /*rotation deadzone*/
+    double turndeadzone; /*rotation deadzone*/
  //   double Ydeadzonedrive;
   //  double Xdeadzonedrive;
 
@@ -90,10 +91,10 @@ public class Robot extends TimedRobot {
       throttledeadzone = 0;
     }
     
-    if(Math.abs(m_DriveControl.getZ())>deadzone) {
-      pivitdeadzone = Math.pow(m_DriveControl.getZ(), 3);
+    if(Math.abs(m_DriveControl.getX())>deadzone) {
+      turndeadzone = Math.pow(m_DriveControl.getX(), 3);
     } else{
-      pivitdeadzone = 0;
+      turndeadzone = 0;
     }
     /*if(Math.abs(XboxCont.getY())>deadzone) {
       Ydeadzonedrive = Math.pow(m_DriveControl.getY(), 3);
@@ -108,7 +109,7 @@ public class Robot extends TimedRobot {
     }*/
 
     //Adding Data to smart dashboard
-    double [] ypr_deg = new double[3];
+    /*double [] ypr_deg = new double[3];
     ErrorCode pigeonResult = pigeon.getYawPitchRoll(ypr_deg);
     PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
     ErrorCode generalStatusResult = pigeon.getGeneralStatus(genStatus);
@@ -132,11 +133,11 @@ public class Robot extends TimedRobot {
     }  else{
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-      drivetrain.arcadeDrive(throttledeadzone, pivitdeadzone);
+      drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
       VisionPIDController.reset();
         }
 
-    if (m_OperateControl.getRawButtonPressed(5)){
+  /*  if (m_OperateControl.getRawButtonPressed(5)){
       rackmotor.RackIntakeFR(1);
       rackmotor.RackIntakeBK(1);
       solenoid.toggle();
@@ -144,7 +145,7 @@ public class Robot extends TimedRobot {
       rackmotor.RackIntakeFR(0);
       rackmotor.RackIntakeBK(0);
       solenoid.toggle();
-    }
+    }*/
   }
 
 

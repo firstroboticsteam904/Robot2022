@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -19,17 +20,17 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
     private WPI_TalonSRX m_left0 = new WPI_TalonSRX(1);
     private WPI_TalonSRX m_left1 = new WPI_TalonSRX(2);
-    private MotorControllerGroup m_left = new MotorControllerGroup(m_left0, m_left1);
+    private SpeedControllerGroup m_left = new SpeedControllerGroup(m_left0, m_left1);
     private WPI_TalonSRX m_right0 = new WPI_TalonSRX(9);
     private WPI_TalonSRX m_right1 = new WPI_TalonSRX(8);
-    private MotorControllerGroup m_right = new MotorControllerGroup(m_right0, m_right1);
+    private SpeedControllerGroup m_right = new SpeedControllerGroup(m_right0, m_right1);
     private DifferentialDrive m_myDrivetrain = new DifferentialDrive(m_left, m_right);
   //  private int offset;
 
-    public void arcadeDrive(double ySpeed, double zRotation){
-      m_myDrivetrain.arcadeDrive(-ySpeed, zRotation);
-      SmartDashboard.putNumber("ySpeed", ySpeed);
-      SmartDashboard.putNumber("zRotation", zRotation);
+    public void arcadeDrive(double throttle, double turnrate){
+      m_myDrivetrain.arcadeDrive(throttle, turnrate, false);
+      SmartDashboard.putNumber("throttle", throttle);
+      SmartDashboard.putNumber("turnrate", turnrate);
     }
 
   /*  public void arcardeDrive(double throttle, double turnrate){
