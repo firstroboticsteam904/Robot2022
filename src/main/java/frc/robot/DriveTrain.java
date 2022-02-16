@@ -28,7 +28,7 @@ public class DriveTrain extends Subsystem {
   //  private int offset;
 
     public void arcadeDrive(double throttle, double turnrate){
-      m_myDrivetrain.arcadeDrive(throttle, turnrate, false);
+      m_myDrivetrain.arcadeDrive(throttle, -turnrate, false);
       SmartDashboard.putNumber("throttle", throttle);
       SmartDashboard.putNumber("turnrate", turnrate);
     }
