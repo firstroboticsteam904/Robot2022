@@ -5,7 +5,7 @@
 package frc.robot.Autos;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
+import frc.robot.DriveAuto;
 public class Auto1 extends CommandGroup {
   /** Add your docs here. */
   public Auto1() {
@@ -13,7 +13,7 @@ public class Auto1 extends CommandGroup {
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-
+addSequential(new DriveAuto(-42));
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

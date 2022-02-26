@@ -25,7 +25,7 @@ public class DriveTrain extends Subsystem {
     private WPI_TalonSRX m_right1 = new WPI_TalonSRX(8);
     private SpeedControllerGroup m_right = new SpeedControllerGroup(m_right0, m_right1);
     private DifferentialDrive m_myDrivetrain = new DifferentialDrive(m_left, m_right);
-  //  private int offset;
+   private int offset;
 
     public void arcadeDrive(double throttle, double turnrate){
       m_myDrivetrain.arcadeDrive(throttle, -turnrate, false);
@@ -33,25 +33,22 @@ public class DriveTrain extends Subsystem {
       SmartDashboard.putNumber("turnrate", turnrate);
     }
 
-  /*  public void arcardeDrive(double throttle, double turnrate){
-      m_myDrivetrain.arcadeDrive(-throttle, turnrate);
-      SmartDashboard.putNumber("throttle", throttle);
-      SmartDashboard.putNumber("turnrate", turnrate);
-    } */
 
     public void resetdistancetraveled(){
-     // offset = /*insertmotorwithencoder*/.getSensorCollection().getQuadraturePosition();
+      m_right0.setSelectedSensorPosition(0);
+      int offset = m_right0.getSensorCollection().getQuadraturePosition();
+      SmartDashboard.putNumber("encoder", offset);
     }
 
-   /* public double getdistancetraveled(){
-      int realencoderticks = /insertmotorwithencoder/.getSensorCollection().getQuadraturePosition();
-      fakeencoderticks = realencoderticks - offset
-      double inches = fakeencoderticks * 0.004601
+    public double getdistancetraveled(){
+      int realencoderticks = m_right0.getSensorCollection().getQuadraturePosition();
+      int fakeencoderticks = realencoderticks - offset;
+      double inches = fakeencoderticks * 0.004601;
      SmartDashboard.putNumber("Distance Traveled", inches);
    
      return inches;
     
-    } */
+    } 
 
     public void DistanceDistance(){
       

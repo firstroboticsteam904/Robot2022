@@ -7,8 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Autos.Auto1;
 import edu.wpi.first.wpilibj.command.Command;
 import com.ctre.phoenix.ErrorCode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.math.controller.PIDController;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,17 +32,20 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private Command autonomousCommand;
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
  // private Command autonomousCommand;
   public static DriveTrain drivetrain;
   public static RackMotor rackmotor;
+  public Auto1 Auto1;
   PIDController VisionPIDController = new PIDController(0, 0, 0);
   public static PigeonIMU pigeon;
   private Joystick m_DriveControl;
  // private Joystick XboxCont;
   private Joystick m_OperateControl;
   double deadzone = .30;
-
+  public static Shooter shooter;
+  private WPI_TalonSRX shootermotor = new WPI_TalonSRX(5);
  // Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
  //private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
@@ -47,16 +53,20 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     drivetrain = new DriveTrain();
     rackmotor = new RackMotor();
+    Auto1 = new Auto1();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     m_DriveControl = new Joystick(0);
     m_DriveControl.setYChannel(2);
     m_DriveControl.setXChannel(1);
+    shooter = new Shooter();
    // XboxCont.setYChannel(1);  //???? Look @ me
    // XboxCont.setXChannel(4);
    // pcmCompressor.enableDigital();
     //solenoid.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
+    m_chooser.setDefaultOption("Auto", Auto1);
+    drivetrain.resetdistancetraveled();
 
 
     //m_chooser.setDefaultOption(name, object);
@@ -68,16 +78,33 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {}
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    super.autonomousInit();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
+
+    autonomousCommand = m_chooser.getSelected();
+    autonomousCommand.start();
+  }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
+  }
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    super.autonomousInit();
+  if (autonomousCommand != null) {
+    autonomousCommand.cancel();
+  }
+  }
 
   @Override
   public void teleopPeriodic() {
+
+
     drivetrain.arcadeDrive(m_DriveControl.getY(), m_DriveControl.getX());
     double throttledeadzone; /*forward/backward deadzone*/
     double turndeadzone; /*rotation deadzone*/
@@ -96,16 +123,16 @@ public class Robot extends TimedRobot {
     } else{
       turndeadzone = 0;
     }
-    /*if(Math.abs(XboxCont.getY())>deadzone) {
-      Ydeadzonedrive = Math.pow(m_DriveControl.getY(), 3);
-    }else {
-      Ydeadzonedrive = 0;
+
+    if (m_DriveControl.getRawButton(6)){
+      Shooter.shootspeed(1);
+    } else {
+      Shooter.shootspeed(0);
     }
-    
-    if(Math.abs(XboxCont.getX())>deadzone) {
-      Xdeadzonedrive = Math.pow(m_DriveControl.getX(), 3);
-    }else {
-      Xdeadzonedrive = 0;
+    /*if (m_OperateControl.getRawButton(6)) {
+      shootermotor.set(1);
+    } else {
+      shootermotor.set(0);
     }*/
 
     //Adding Data to smart dashboard
@@ -146,6 +173,8 @@ public class Robot extends TimedRobot {
       rackmotor.RackIntakeBK(0);
       solenoid.toggle();
     }*/
+
+
   }
 
 
