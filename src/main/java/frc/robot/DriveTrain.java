@@ -43,7 +43,8 @@ public class DriveTrain extends Subsystem {
     public double getdistancetraveled(){
       int realencoderticks = m_right0.getSensorCollection().getQuadraturePosition();
       int fakeencoderticks = realencoderticks - offset;
-      double inches = fakeencoderticks * 0.004601;
+      //double inches = fakeencoderticks * 0.004601;
+      double inches = fakeencoderticks * 0.00308267;
      SmartDashboard.putNumber("Distance Traveled", inches);
    
      return inches;
