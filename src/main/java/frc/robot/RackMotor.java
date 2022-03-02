@@ -14,16 +14,14 @@ public class RackMotor extends Subsystem {
   // here. Call these from Commands.
 
 
-  private WPI_TalonSRX rackintakeFront = new WPI_TalonSRX(5);
-  private WPI_TalonSRX rackintakeBack = new WPI_TalonSRX(6);
+  private WPI_TalonSRX rackintake = new WPI_TalonSRX(5);
 
-  public void RackIntakeFR(double speed){
-    rackintakeFront.set(speed);
+
+  public void RackIntake(double speed){
+    rackintake.set(speed);
   }
 
-  public void RackIntakeBK(double speed){
-    rackintakeBack.set(speed);
-  }
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

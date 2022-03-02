@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autos.Auto1;
+import frc.robot.RackMotor;
 import edu.wpi.first.wpilibj.command.Command;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -46,9 +48,10 @@ public class Robot extends TimedRobot {
   double deadzone = .30;
   public static Shooter shooter;
   private WPI_TalonSRX shootermotor = new WPI_TalonSRX(5);
- // Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
- //private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-
+  Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+  private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+  public static void delay(double seconds){}
+                        
   @Override
   public void robotInit() {
     drivetrain = new DriveTrain();
@@ -60,10 +63,8 @@ public class Robot extends TimedRobot {
     m_DriveControl.setYChannel(2);
     m_DriveControl.setXChannel(1);
     shooter = new Shooter();
-   // XboxCont.setYChannel(1);  //???? Look @ me
-   // XboxCont.setXChannel(4);
-   // pcmCompressor.enableDigital();
-    //solenoid.set(kForward);
+    pcmCompressor.enableDigital();
+    solenoid.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
     m_chooser.setDefaultOption("Auto", Auto1);
     drivetrain.resetdistancetraveled();
@@ -129,25 +130,18 @@ public class Robot extends TimedRobot {
     } else {
       Shooter.shootspeed(0);
     }
-    /*if (m_OperateControl.getRawButton(6)) {
-      shootermotor.set(1);
+    if (m_DriveControl.getRawButton(12)){
+      solenoid.set(DoubleSolenoid.Value.kReverse);
+      delay(0.4);
+      rackmotor.RackIntake(1);
     } else {
-      shootermotor.set(0);
-    }*/
+      solenoid.set(DoubleSolenoid.Value.kForward);
+      rackmotor.RackIntake(0);
+    }
 
-    //Adding Data to smart dashboard
-    /*double [] ypr_deg = new double[3];
-    ErrorCode pigeonResult = pigeon.getYawPitchRoll(ypr_deg);
-    PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
-    ErrorCode generalStatusResult = pigeon.getGeneralStatus(genStatus);
-    SmartDashboard.putNumber("Yaw:", ypr_deg[0]);
-    SmartDashboard.putNumber("Pitch:", ypr_deg[1]);
-    SmartDashboard.putNumber("Roll:", ypr_deg[2]);
-    SmartDashboard.putString("Pigeon Error Code", pigeonResult.toString());
-    SmartDashboard.putString("Pigeon General Status Error Code", generalStatusResult.toString());
-    SmartDashboard.putString("Pigeon General Status", genStatus.toString());
 
-    if(m_DriveControl.getRawButton(1)){
+   
+    /*if(m_DriveControl.getRawButton(1)){
       double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
@@ -162,17 +156,9 @@ public class Robot extends TimedRobot {
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
       drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
       VisionPIDController.reset();
-        }
+        }*/
 
-  /*  if (m_OperateControl.getRawButtonPressed(5)){
-      rackmotor.RackIntakeFR(1);
-      rackmotor.RackIntakeBK(1);
-      solenoid.toggle();
-    } else if (m_OperateControl.getRawButtonPressed(7)){
-      rackmotor.RackIntakeFR(0);
-      rackmotor.RackIntakeBK(0);
-      solenoid.toggle();
-    }*/
+
 
 
   }
