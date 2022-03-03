@@ -49,7 +49,8 @@ public class Robot extends TimedRobot {
   public static Shooter shooter;
   private WPI_TalonSRX shootermotor = new WPI_TalonSRX(5);
   Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-  private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+  private final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
+  private final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
   public static void delay(double seconds){}
                         
   @Override
@@ -64,7 +65,8 @@ public class Robot extends TimedRobot {
     m_DriveControl.setXChannel(1);
     shooter = new Shooter();
     pcmCompressor.enableDigital();
-    solenoid.set(kForward);
+    solenoidright.set(kReverse);
+    solenoidleft.set(kReverse);
     SmartDashboard.putData("Autos", m_chooser);
     m_chooser.setDefaultOption("Auto", Auto1);
     drivetrain.resetdistancetraveled();
@@ -130,12 +132,14 @@ public class Robot extends TimedRobot {
     } else {
       Shooter.shootspeed(0);
     }
-    if (m_DriveControl.getRawButton(12)){
-      solenoid.set(DoubleSolenoid.Value.kReverse);
+    if (m_DriveControl.getRawButton(9)){
+      solenoidright.set(DoubleSolenoid.Value.kForward);
+      solenoidleft.set(DoubleSolenoid.Value.kForward);
       delay(0.4);
       rackmotor.RackIntake(1);
     } else {
-      solenoid.set(DoubleSolenoid.Value.kForward);
+      solenoidright.set(DoubleSolenoid.Value.kReverse);
+      solenoidleft.set(DoubleSolenoid.Value.kReverse);
       rackmotor.RackIntake(0);
     }
 
