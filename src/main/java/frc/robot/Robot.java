@@ -45,9 +45,8 @@ public class Robot extends TimedRobot {
   private Joystick m_DriveControl;
  // private Joystick XboxCont;
   private Joystick m_OperateControl;
-  double deadzone = .30;
+  double deadzone = .38;
   public static Shooter shooter;
-  private WPI_TalonSRX shootermotor = new WPI_TalonSRX(5);
   Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
   private final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
   private final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
@@ -61,8 +60,9 @@ public class Robot extends TimedRobot {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     m_DriveControl = new Joystick(0);
-    m_DriveControl.setYChannel(2);
+    m_DriveControl.setYChannel(4);
     m_DriveControl.setXChannel(1);
+    m_OperateControl = new Joystick(1);
     shooter = new Shooter();
     pcmCompressor.enableDigital();
     solenoidright.set(kReverse);
@@ -132,10 +132,10 @@ public class Robot extends TimedRobot {
     } else {
       Shooter.shootspeed(0);
     }
-    if (m_DriveControl.getRawButton(9)){
+    if (m_OperateControl.getRawButton(12)){
       solenoidright.set(DoubleSolenoid.Value.kForward);
       solenoidleft.set(DoubleSolenoid.Value.kForward);
-      delay(0.4);
+      delay(2);
       rackmotor.RackIntake(1);
     } else {
       solenoidright.set(DoubleSolenoid.Value.kReverse);
