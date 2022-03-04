@@ -48,8 +48,8 @@ public class Robot extends TimedRobot {
   double deadzone = .38;
   public static Shooter shooter;
   Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-  private final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
-  private final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
+  public final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
+  public final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
   public static void delay(double seconds){}
                         
   @Override
@@ -138,9 +138,10 @@ public class Robot extends TimedRobot {
       delay(2);
       rackmotor.RackIntake(1);
     } else {
+      rackmotor.RackIntake(0);
+      delay(10);
       solenoidright.set(DoubleSolenoid.Value.kReverse);
       solenoidleft.set(DoubleSolenoid.Value.kReverse);
-      rackmotor.RackIntake(0);
     }
 
 
