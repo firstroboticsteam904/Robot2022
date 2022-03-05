@@ -14,10 +14,10 @@ public class RackMotor extends Subsystem {
   // here. Call these from Commands.
 
 
-  private WPI_TalonSRX rackintake = new WPI_TalonSRX(5);
+  private static WPI_TalonSRX rackintake = new WPI_TalonSRX(10);
 
 
-  public void RackIntake(double speed){
+  public static void RackIntake(double speed){
     rackintake.set(speed);
   }
 

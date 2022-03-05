@@ -50,7 +50,8 @@ public class Robot extends TimedRobot {
   Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
   public final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
   public final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
-  public static void delay(double seconds){}
+  public final DoubleSolenoid solenoidmiddle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 6);
+ public static Timer ticktick = new Timer();
                         
   @Override
   public void robotInit() {
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot {
     pcmCompressor.enableDigital();
     solenoidright.set(kReverse);
     solenoidleft.set(kReverse);
+    solenoidmiddle.set(kReverse);
     SmartDashboard.putData("Autos", m_chooser);
     m_chooser.setDefaultOption("Auto", Auto1);
     drivetrain.resetdistancetraveled();
@@ -127,24 +129,44 @@ public class Robot extends TimedRobot {
       turndeadzone = 0;
     }
 
-    if (m_DriveControl.getRawButton(6)){
-      Shooter.shootspeed(1);
-    } else {
-      Shooter.shootspeed(0);
-    }
+
     if (m_OperateControl.getRawButton(12)){
+      ticktick.start();
       solenoidright.set(DoubleSolenoid.Value.kForward);
       solenoidleft.set(DoubleSolenoid.Value.kForward);
-      delay(2);
-      rackmotor.RackIntake(1);
+      //for(int i = 0; i < 100000000; i++);
+      if(ticktick.get() > 2){
+        rackmotor.RackIntake(1);
+      }
     } else {
+      ticktick.stop();
+      ticktick.reset();
       rackmotor.RackIntake(0);
-      delay(10);
+      //for(int i = 0; i < 1000000; i++);
       solenoidright.set(DoubleSolenoid.Value.kReverse);
       solenoidleft.set(DoubleSolenoid.Value.kReverse);
     }
 
+    if (m_OperateControl.getRawButton(11)){
+      solenoidmiddle.set(DoubleSolenoid.Value.kForward);
 
+    }  else {
+      solenoidmiddle.set(DoubleSolenoid.Value.kReverse);
+    }
+
+
+      if(m_OperateControl.getRawButton(7)){
+      shooter.ShootMotorSelect();
+      } else{
+        shooter.shootspeed(0);
+      }
+
+      if(m_OperateControl.getRawButtonPressed(2)){
+        shooter.SpeedSelectUp();
+      }
+      if(m_OperateControl.getRawButtonPressed(3)){
+        shooter.SpeedSelectDown();
+      }
    
     /*if(m_DriveControl.getRawButton(1)){
       double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);

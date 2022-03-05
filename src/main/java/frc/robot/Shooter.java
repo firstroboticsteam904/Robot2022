@@ -24,8 +24,26 @@ public class Shooter extends Subsystem {
  shootmotors.set(speed);
  }
 
+double [] ShootSpeedTable = {0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0};
+int ItemTracker = 0;
 
 
+ public void SpeedSelectUp(){
+   ItemTracker = (ItemTracker + 1) % ShootSpeedTable.length;
+ 
+  SmartDashboard.putNumber("Speed Select", ShootSpeedTable[ItemTracker]);
+  }
+
+  public void SpeedSelectDown(){
+    ItemTracker = (ItemTracker + ShootSpeedTable.length - 1) % ShootSpeedTable.length;
+    SmartDashboard.putNumber("Speed Select", ShootSpeedTable[ItemTracker]);
+  }
+
+  public void ShootMotorSelect(){
+    final double speed = ShootSpeedTable[ItemTracker];
+
+    shootmotors.set(speed);
+  }
 
   @Override
   public void initDefaultCommand() {
