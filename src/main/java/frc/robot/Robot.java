@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autos.Auto1;
 import frc.robot.RackMotor;
+import frc.robot.wrongball;
 import edu.wpi.first.wpilibj.command.Command;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.limelightdist;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.math.controller.PIDController;
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
  // private Command autonomousCommand;
   public static DriveTrain drivetrain;
   public static RackMotor rackmotor;
+  public static wrongball wrongpick;
   public Auto1 Auto1;
   PIDController VisionPIDController = new PIDController(0, 0, 0);
   public static PigeonIMU pigeon;
@@ -50,8 +53,11 @@ public class Robot extends TimedRobot {
   Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
   public final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
   public final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
-  public final DoubleSolenoid solenoidmiddle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 6);
+  public static DoubleSolenoid solenoidmiddle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 6);
  public static Timer ticktick = new Timer();
+ public static Timer tocktock = new Timer();
+ public static limelightdist distance;
+
                         
   @Override
   public void robotInit() {
@@ -154,6 +160,18 @@ public class Robot extends TimedRobot {
       solenoidmiddle.set(DoubleSolenoid.Value.kReverse);
     }
 
+    if(m_OperateControl.getRawButton(3)){
+      if(!Robot.wrongpick.isRunning()){
+        Robot.wrongpick.start();
+      }
+    }
+
+      if(limelightdist.distanceFromLimelightToGoalInches <= 20 &&  m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(.50);
+      } else if(limelightdist.distanceFromLimelightToGoalInches <= 30 && m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(.60);
+      }
+
 
       if(m_OperateControl.getRawButton(7)){
       shooter.ShootMotorSelect();
@@ -168,8 +186,9 @@ public class Robot extends TimedRobot {
         shooter.SpeedSelectDown();
       }
    
-    /*if(m_DriveControl.getRawButton(1)){
-      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
+    if(m_DriveControl.getRawButton(1)){
+      SmartDashboard.putNumber("distance", limelightdist.distanceFromLimelightToGoalInches);
+     /* double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
@@ -182,8 +201,8 @@ public class Robot extends TimedRobot {
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
       drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
-      VisionPIDController.reset();
-        }*/
+      VisionPIDController.reset();*/
+        }
 
 
 
