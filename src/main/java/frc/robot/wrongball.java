@@ -25,8 +25,8 @@ public class wrongball extends Command {
   @Override
   protected void execute() {
     Robot.shooter.shootspeed(.40);
-      if(Robot.tocktock.get() > 2){
-        Robot.solenoidmiddle.set(DoubleSolenoid.Value.kForward);
+      if(Robot.tocktock.get() > 3){
+        Robot.solenoidmiddle.set(DoubleSolenoid.Value.kReverse);
       }
   }
 
@@ -41,7 +41,7 @@ public class wrongball extends Command {
   protected void end() {
     Robot.tocktock.stop();
     Robot.tocktock.reset();
-    Robot.solenoidmiddle.set(DoubleSolenoid.Value.kReverse);
+    Robot.solenoidmiddle.set(DoubleSolenoid.Value.kForward);
     Robot.shooter.shootspeed(0.0);
   }
 

@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
     pcmCompressor.enableDigital();
     solenoidright.set(kReverse);
     solenoidleft.set(kReverse);
-    solenoidmiddle.set(kReverse);
+    solenoidmiddle.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
     m_chooser.setDefaultOption("Auto", Auto1);
     drivetrain.resetdistancetraveled();
@@ -154,10 +154,10 @@ public class Robot extends TimedRobot {
     }
 
     if (m_OperateControl.getRawButton(11)){
-      solenoidmiddle.set(DoubleSolenoid.Value.kForward);
+      solenoidmiddle.set(DoubleSolenoid.Value.kReverse);
 
     }  else {
-      solenoidmiddle.set(DoubleSolenoid.Value.kReverse);
+      solenoidmiddle.set(DoubleSolenoid.Value.kForward);
     }
 
     if(m_OperateControl.getRawButton(3)){
@@ -166,11 +166,11 @@ public class Robot extends TimedRobot {
       }
     }
 
-      if(limelightdist.distanceFromLimelightToGoalInches <= 20 &&  m_OperateControl.getRawButton(7)){
+     /* if(limelightdist.distanceFromLimelightToGoalInches <= 20 &&  m_OperateControl.getRawButton(7)){
         shooter.shootspeed(.50);
       } else if(limelightdist.distanceFromLimelightToGoalInches <= 30 && m_OperateControl.getRawButton(7)){
         shooter.shootspeed(.60);
-      }
+      }*/
 
 
       if(m_OperateControl.getRawButton(7)){
@@ -188,6 +188,8 @@ public class Robot extends TimedRobot {
    
     if(m_DriveControl.getRawButton(1)){
       SmartDashboard.putNumber("distance", limelightdist.distanceFromLimelightToGoalInches);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);}
      /* double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
@@ -202,12 +204,17 @@ public class Robot extends TimedRobot {
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
       drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
       VisionPIDController.reset();*/
+      else{
+        SmartDashboard.putNumber("distance", 0);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+      }
         }
 
 
 
 
-  }
+  
 
 
 

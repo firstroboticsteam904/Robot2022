@@ -19,7 +19,7 @@ public class limelightdist extends Subsystem {
   //how many degrees back is your limelight rotated from perfectly vertical
   public static double limelightmountangledegrees = 1.0;
   //distance from the center of the Limelight to the floor
-  public static double limelightheightinches = 1.0;
+  public static double limelightheightinches = 41.75;
   //distance from target to floor
   public static double goalHeightInches = 104.0;
 
