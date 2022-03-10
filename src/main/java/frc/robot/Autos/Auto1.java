@@ -6,16 +6,22 @@ package frc.robot.Autos;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.DriveAuto;
-import frc.robot.Shooter;
+import frc.robot.ShootAuto;
+import frc.robot.SolenoidAuto;
+import frc.robot.StopShootAuto;
 public class Auto1 extends CommandGroup {
-  private Shooter shooter = new Shooter();
+
   /** Add your docs here. */
   public Auto1() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-addSequential(new DriveAuto(-42));
+addSequential(new DriveAuto(-110));
+addSequential(new ShootAuto(), 3);
+addSequential(new SolenoidAuto(), 3);
+addSequential(new StopShootAuto());
+
 
     // To run multiple commands at the same time,
     // use addParallel()

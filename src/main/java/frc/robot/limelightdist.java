@@ -17,7 +17,7 @@ public class limelightdist extends Subsystem {
   public static NetworkTableEntry ty = table.getEntry("ty");
   public static double targetOffsetAngle_Vertical = ty.getDouble(0.0);
   //how many degrees back is your limelight rotated from perfectly vertical
-  public static double limelightmountangledegrees = 1.0;
+  public static double limelightmountangledegrees = 30.0;
   //distance from the center of the Limelight to the floor
   public static double limelightheightinches = 41.75;
   //distance from target to floor

@@ -6,12 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootAuto extends Command {
-  public ShootAuto() {
+
+public class StopShootAuto extends Command {
+  public StopShootAuto() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.shooter);
-    requires(Robot.rackmotor);
     setInterruptible(true);
   }
 
@@ -22,14 +21,13 @@ public class ShootAuto extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
- Robot.shooter.shootspeed(0.60);
-
+    Robot.shooter.shootspeed(0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

@@ -4,15 +4,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootAuto extends Command {
-  public ShootAuto() {
+public class SolenoidAuto extends Command {
+  public SolenoidAuto() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.shooter);
-    requires(Robot.rackmotor);
     setInterruptible(true);
+
   }
 
   // Called just before this Command runs the first time
@@ -22,19 +22,20 @@ public class ShootAuto extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
- Robot.shooter.shootspeed(0.60);
-
+    Robot.solenoidmiddle.set(Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {}
+  protected void end() {
+    Robot.solenoidmiddle.set(Value.kForward);
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

@@ -18,7 +18,7 @@ public class RackMotor extends Subsystem {
 
 
   public static void RackIntake(double speed){
-    rackintake.set(speed);
+    rackintake.set(-speed);
   }
 
   
