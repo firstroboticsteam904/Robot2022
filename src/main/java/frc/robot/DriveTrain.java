@@ -20,10 +20,12 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
     private WPI_TalonSRX m_left0 = new WPI_TalonSRX(1);
     private WPI_TalonSRX m_left1 = new WPI_TalonSRX(2);
-    private SpeedControllerGroup m_left = new SpeedControllerGroup(m_left0, m_left1);
+    private WPI_TalonSRX m_left2 = new WPI_TalonSRX(20);
+    private MotorControllerGroup m_left = new MotorControllerGroup(m_left0, m_left1, m_left2);
     private WPI_TalonSRX m_right0 = new WPI_TalonSRX(9);
     private WPI_TalonSRX m_right1 = new WPI_TalonSRX(8);
-    private SpeedControllerGroup m_right = new SpeedControllerGroup(m_right0, m_right1);
+    private WPI_TalonSRX m_right2 = new WPI_TalonSRX(85);
+    private MotorControllerGroup m_right = new MotorControllerGroup(m_right0, m_right1, m_right2);
     private DifferentialDrive m_myDrivetrain = new DifferentialDrive(m_left, m_right);
    private int offset;
 

@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     final double targetOffsetAngle_Vertical = ty.getDouble(0.0);
-    final double limelightmountangledegrees = 14.3;
+    final double limelightmountangledegrees = 13;
     final double limelightheightinches = 41.75;
     final double goalHeightInches = 104;
     final double angletogoaldegrees = limelightmountangledegrees + targetOffsetAngle_Vertical;
@@ -183,22 +183,23 @@ public class Robot extends TimedRobot {
         Robot.ohno.start();
       
     }
-
-      /*if(limelightdist.distanceFromLimelightToGoalInches <= 114 &&  m_OperateControl.getRawButton(7)){
-        shooter.shootspeed(.60);
-      } else if(limelightdist.distanceFromLimelightToGoalInches <= 120 && m_OperateControl.getRawButton(7)){
-        shooter.shootspeed(.60);
-      } else if(limelightdist.distanceFromLimelightToGoalInches <= 140 && m_OperateControl.getRawButton(7)){
-        shooter.shootspeed(.70);
-      } else if(limelightdist.distanceFromLimelightToGoalInches <= 150 && m_OperateControl.getRawButton(7)){
-        shooter.shootspeed(.80);
-      } else if(limelightdist.distanceFromLimelightToGoalInches <= 160 && m_OperateControl.getRawButton(7)){
-        shooter.shootspeed(.90);
-      } else if (limelightdist.distanceFromLimelightToGoalInches > 170 && m_OperateControl.getRawButton(7)){
-        shooter.shootspeed(1.0);
+    if(distanceFromLimelightToGoalInches <=1 && m_OperateControl.getRawButton(7)){
+      shooter.shootspeed(0.45);
+      } else if(distanceFromLimelightToGoalInches >= 50 &&  m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(0.65);
+      } else if(distanceFromLimelightToGoalInches >= 111 && distanceFromLimelightToGoalInches <=130 && m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(0.72);
+      } else if(distanceFromLimelightToGoalInches >= 131 && distanceFromLimelightToGoalInches <= 150 && m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(0.78);
+      } else if(distanceFromLimelightToGoalInches >= 151 && distanceFromLimelightToGoalInches <= 170 && m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(0.81);
+      } else if(distanceFromLimelightToGoalInches >= 171 && distanceFromLimelightToGoalInches <=190 && m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(0.86);
+      } else if (distanceFromLimelightToGoalInches > 190 && m_OperateControl.getRawButton(7)){
+        shooter.shootspeed(0.93);
       } else {
         shooter.shootspeed(0);
-      }*/
+      }
 
 
       if(m_OperateControl.getRawButton(7)){
