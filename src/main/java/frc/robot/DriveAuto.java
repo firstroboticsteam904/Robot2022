@@ -13,7 +13,7 @@ public class DriveAuto extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     desireddistance = distance;
-    requires(Robot.drivetrain);
+    //requires(Robot.drivetrain);
   }
 
   // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class DriveAuto extends Command {
   protected void execute() {
     double robovroom = Robot.drivetrain.getdistancetraveled();
    if(robovroom > desireddistance){
-    Robot.drivetrain.arcadeDrive( 0.05, 0.2);
+    Robot.drivetrain.arcadeDrive( 0.05, 0.25);
     SmartDashboard.getNumber("Distance Traveled", robovroom);
    } else{
      Robot.drivetrain.arcadeDrive(0, 0);
@@ -39,7 +39,7 @@ public class DriveAuto extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.drivetrain.getdistancetraveled() < desireddistance;
   }
 
   // Called once after isFinished returns true

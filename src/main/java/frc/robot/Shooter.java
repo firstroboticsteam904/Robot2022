@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -18,13 +19,13 @@ public class Shooter extends Subsystem {
   // here. Call these from Commands.
   private final static WPI_TalonSRX shootmotor = new WPI_TalonSRX(5);
   private final static WPI_TalonSRX shootmotor2 = new WPI_TalonSRX(6);
-  private final static SpeedControllerGroup shootmotors = new SpeedControllerGroup(shootmotor, shootmotor2);
+  private final static MotorControllerGroup shootmotors = new MotorControllerGroup(shootmotor, shootmotor2);
 
- public static void shootspeed(double speed){
+ public static void shootspeed(final double speed){
  shootmotors.set(speed);
  }
 
-double [] ShootSpeedTable = {0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0};
+double [] ShootSpeedTable = {0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65};
 int ItemTracker = 0;
 
 
