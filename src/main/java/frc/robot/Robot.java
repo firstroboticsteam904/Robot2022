@@ -183,23 +183,57 @@ public class Robot extends TimedRobot {
         Robot.ohno.start();
       
     }
+    if(m_DriveControl.getRawButton(5)){
+
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    
+      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
+      double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+      SmartDashboard.putNumber("LimelightTX", tx);
+      SmartDashboard.putNumber("LimelightTY", ty);
+      double LimeCont = VisionPIDController.calculate(0, tx);
+      drivetrain.arcadeDrive(LimeCont, throttledeadzone);
+      SmartDashboard.putNumber("LimeCont", LimeCont);
+      SmartDashboard.putNumber("Distance", distanceFromLimelightToGoalInches);
+
     if(distanceFromLimelightToGoalInches <=1 && m_OperateControl.getRawButton(7)){
       Shooter.shootspeed(0.45);
       } else if(distanceFromLimelightToGoalInches <= 110 &&  m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.65);
       } else if(distanceFromLimelightToGoalInches >= 111 && distanceFromLimelightToGoalInches <=130 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.72);
+        Shooter.shootspeed(0.73);
       } else if(distanceFromLimelightToGoalInches >= 131 && distanceFromLimelightToGoalInches <= 150 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.78);
+        Shooter.shootspeed(0.79);
       } else if(distanceFromLimelightToGoalInches >= 151 && distanceFromLimelightToGoalInches <= 170 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.81);
+        Shooter.shootspeed(0.84);
       } else if(distanceFromLimelightToGoalInches >= 171 && distanceFromLimelightToGoalInches <=190 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.86);
+        Shooter.shootspeed(0.90);
       } else if (distanceFromLimelightToGoalInches > 190 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.93);
-      } else {
+        Shooter.shootspeed(0.95);
+      } else {                                       
         Shooter.shootspeed(0);
       }
+    }
+      
+      else{
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
+        VisionPIDController.reset();
+        if(m_OperateControl.getRawButton(7)){
+        shooter.ShootMotorSelect();
+        } else{
+          shooter.shootspeed(0);
+        }
+  
+        if(m_OperateControl.getRawButtonPressed(2)){
+          shooter.SpeedSelectUp();
+        }
+        if(m_OperateControl.getRawButtonPressed(3)){
+          shooter.SpeedSelectDown();}
 
 
      /* if(m_OperateControl.getRawButton(7)){
@@ -215,7 +249,7 @@ public class Robot extends TimedRobot {
         shooter.SpeedSelectDown();
       }*/
    
-    if(m_DriveControl.getRawButton(5)){
+   /* if(m_DriveControl.getRawButton(5)){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
     
@@ -237,7 +271,8 @@ public class Robot extends TimedRobot {
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
       drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
       VisionPIDController.reset();
-    }
+    }*/
+  }
 
 
 
