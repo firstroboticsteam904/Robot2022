@@ -10,15 +10,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autos.Auto1;
-import frc.robot.RackMotor;
-import frc.robot.wrongball;
 import edu.wpi.first.wpilibj.command.Command;
-import com.ctre.phoenix.ErrorCode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.limelightdist;
 import edu.wpi.first.networktables.NetworkTable;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
-import java.util.stream.IntStream;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -183,6 +177,7 @@ public class Robot extends TimedRobot {
         Robot.ohno.start();
       
     }
+
     if(m_DriveControl.getRawButton(5)){
 
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
@@ -234,44 +229,17 @@ public class Robot extends TimedRobot {
         }
         if(m_OperateControl.getRawButtonPressed(3)){
           shooter.SpeedSelectDown();}
+        if(m_DriveControl.getRawButtonPressed(8)){
+          solenoidright.set(DoubleSolenoid.Value.kForward);
+          solenoidleft.set(DoubleSolenoid.Value.kForward);
+
+          }
+          if(m_DriveControl.getRawButtonPressed(7)){
+            solenoidright.set(DoubleSolenoid.Value.kReverse);
+            solenoidleft.set(DoubleSolenoid.Value.kReverse);
+          }
 
 
-     /* if(m_OperateControl.getRawButton(7)){
-      shooter.ShootMotorSelect();
-      } else{
-        shooter.shootspeed(0);
-      }
-
-      if(m_OperateControl.getRawButtonPressed(2)){
-        shooter.SpeedSelectUp();
-      }
-      if(m_OperateControl.getRawButtonPressed(3)){
-        shooter.SpeedSelectDown();
-      }*/
-   
-   /* if(m_DriveControl.getRawButton(5)){
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
-    
-      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
-      double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
-      SmartDashboard.putNumber("LimelightTX", tx);
-      SmartDashboard.putNumber("LimelightTY", ty);
-      double LimeCont = VisionPIDController.calculate(0, tx);
-      drivetrain.arcadeDrive(LimeCont, throttledeadzone);
-      SmartDashboard.putNumber("LimeCont", LimeCont);
-      SmartDashboard.putNumber("Distance", distanceFromLimelightToGoalInches);
-
-    }  else{
-
-
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-      drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
-      VisionPIDController.reset();
-    }*/
   }
 
 
