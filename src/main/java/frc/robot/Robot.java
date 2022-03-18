@@ -177,6 +177,26 @@ public class Robot extends TimedRobot {
         Robot.ohno.start();
       
     }
+    if(m_DriveControl.getRawButton(6)){
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    
+      double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(2);
+      double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+      SmartDashboard.putNumber("LimelightTX", tx);
+      SmartDashboard.putNumber("LimelightTY", ty);
+      double LimeCont = VisionPIDController.calculate(0, tx);
+      drivetrain.arcadeDrive(LimeCont, throttledeadzone);
+    }else{
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        drivetrain.arcadeDrive(throttledeadzone, turndeadzone);
+        VisionPIDController.reset();
+    }
+
+
 
     if(m_DriveControl.getRawButton(5)){
 
