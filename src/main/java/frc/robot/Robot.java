@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   public static wrongball ohno;
   public Auto1 Auto1;
 // pidcontroller 
-  PIDController VisionPIDController = new PIDController(0.02, 0.04, 0.004);
+  PIDController VisionPIDController = new PIDController(0.045, 0.065, 0.0065);
   //driveteam joysticks
   private Joystick m_DriveControl;
   private Joystick m_OperateControl;
@@ -197,7 +197,6 @@ public class Robot extends TimedRobot {
     }
 
 
-
     if(m_DriveControl.getRawButton(5)){
 
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
@@ -215,20 +214,18 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Distance", distanceFromLimelightToGoalInches);
 
     if(distanceFromLimelightToGoalInches <=1 && m_OperateControl.getRawButton(7)){
-      Shooter.shootspeed(0.45);
+      Shooter.shootspeed(0.35);
       } else if(distanceFromLimelightToGoalInches <= 110 &&  m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.65);
       } else if(distanceFromLimelightToGoalInches >= 111 && distanceFromLimelightToGoalInches <=130 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.73);
+        Shooter.shootspeed(0.70);
       } else if(distanceFromLimelightToGoalInches >= 131 && distanceFromLimelightToGoalInches <= 150 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.79);
+        Shooter.shootspeed(0.75);
       } else if(distanceFromLimelightToGoalInches >= 151 && distanceFromLimelightToGoalInches <= 170 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.84);
-      } else if(distanceFromLimelightToGoalInches >= 171 && distanceFromLimelightToGoalInches <=190 && m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.90);
-      } else if (distanceFromLimelightToGoalInches > 190 && m_OperateControl.getRawButton(7)){
-        Shooter.shootspeed(0.95);
-      } else {                                       
+      } else if(distanceFromLimelightToGoalInches > 171 && m_OperateControl.getRawButton(7)){
+        Shooter.shootspeed(1.0);
+      }  else {                                       
         Shooter.shootspeed(0);
       }
     }
@@ -249,35 +246,10 @@ public class Robot extends TimedRobot {
         }
         if(m_OperateControl.getRawButtonPressed(3)){
           shooter.SpeedSelectDown();}
-        if(m_DriveControl.getRawButtonPressed(8)){
-          solenoidright.set(DoubleSolenoid.Value.kForward);
-          solenoidleft.set(DoubleSolenoid.Value.kForward);
-
-          }
-          if(m_DriveControl.getRawButtonPressed(7)){
-            solenoidright.set(DoubleSolenoid.Value.kReverse);
-            solenoidleft.set(DoubleSolenoid.Value.kReverse);
-          }
-
-
+        
   }
 
-
-
-
-
-
-
-
   }
-
-
-
-
-  
-
-
-
 
   @Override
   public void disabledInit() {}

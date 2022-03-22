@@ -25,7 +25,8 @@ public class Shooter extends Subsystem {
  shootmotors.set(speed);
  }
 
-double [] ShootSpeedTable = {0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65};
+//double [] ShootSpeedTable = {0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65};
+double [] ShootSpeedTable = {0.70, 0.75, 0.90, 1.0, 0.35, 0.65};
 int ItemTracker = 0;
 
 
