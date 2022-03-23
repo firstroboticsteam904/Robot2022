@@ -53,8 +53,8 @@ public class Robot extends TimedRobot {
   double deadzone = .25;
   public static Shooter shooter;
   Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-  public final DoubleSolenoid solenoidright = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
-  public final DoubleSolenoid solenoidleft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
+  public final DoubleSolenoid solenoidintake = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
+  public final DoubleSolenoid solenoidclimb = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 5);
   public static DoubleSolenoid solenoidmiddle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 6);
   public static Timer ticktick = new Timer();
   public static Timer tocktock = new Timer();
@@ -78,8 +78,8 @@ public class Robot extends TimedRobot {
     m_OperateControl = new Joystick(1);
     shooter = new Shooter();
     pcmCompressor.enableDigital();
-    solenoidright.set(kReverse);
-    solenoidleft.set(kReverse);
+    solenoidintake.set(kReverse);
+    solenoidclimb.set(kForward);
     solenoidmiddle.set(kForward);
     SmartDashboard.putData("Autos", m_chooser);
     m_chooser.setDefaultOption("Auto", Auto1);
@@ -147,11 +147,18 @@ public class Robot extends TimedRobot {
       turndeadzone = 0;
     }
 
+    if (m_DriveControl.getRawButton(1)) {
+      solenoidclimb.set(kReverse);
+    }
+
+    if (m_DriveControl.getRawButton(2)) {
+      solenoidclimb.set(kForward);
+    }
+
 //left bumper
     if (m_OperateControl.getRawButton(5)){
       ticktick.start();
-      solenoidright.set(DoubleSolenoid.Value.kForward);
-      solenoidleft.set(DoubleSolenoid.Value.kForward);
+      solenoidintake.set(DoubleSolenoid.Value.kForward);
       //for(int i = 0; i < 100000000; i++);
       if(ticktick.get() > 0.5){
         rackmotor.RackIntake(.85);
@@ -161,8 +168,7 @@ public class Robot extends TimedRobot {
       ticktick.reset();
       rackmotor.RackIntake(0);
       //for(int i = 0; i < 1000000; i++);
-      solenoidright.set(DoubleSolenoid.Value.kReverse);
-      solenoidleft.set(DoubleSolenoid.Value.kReverse);
+      solenoidintake.set(DoubleSolenoid.Value.kReverse);
     }
 //right trigger
     if (m_OperateControl.getRawButton(8)){
