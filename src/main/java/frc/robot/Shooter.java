@@ -20,6 +20,7 @@ public class Shooter extends Subsystem {
   private final static WPI_TalonSRX shootmotor = new WPI_TalonSRX(5);
   private final static WPI_TalonSRX shootmotor2 = new WPI_TalonSRX(6);
   private final static MotorControllerGroup shootmotors = new MotorControllerGroup(shootmotor, shootmotor2);
+  
 
  public static void shootspeed(final double speed){
  shootmotors.set(speed);
@@ -47,6 +48,11 @@ int ItemTracker = 0;
     shootmotors.set(speed);
   }
 
+  public double getRpm() {
+    return shootmotor2.getSensorCollection().getQuadratureVelocity();
+  }
+
+  public double disiredRPM = 9.5 * ShootSpeedTable[ItemTracker];
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     final double targetOffsetAngle_Vertical = ty.getDouble(0.0);
-    final double limelightmountangledegrees = 13;
+    final double limelightmountangledegrees = 13.490;
     final double limelightheightinches = 41.75;
     final double goalHeightInches = 104;
     final double angletogoaldegrees = limelightmountangledegrees + targetOffsetAngle_Vertical;
@@ -220,6 +220,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Distance", distanceFromLimelightToGoalInches);
 
     if(distanceFromLimelightToGoalInches <=1 && m_OperateControl.getRawButton(7)){
+
       Shooter.shootspeed(0.35);
       } else if(distanceFromLimelightToGoalInches <= 110 &&  m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.65);
@@ -243,6 +244,7 @@ public class Robot extends TimedRobot {
         VisionPIDController.reset();
         if(m_OperateControl.getRawButton(7)){
         shooter.ShootMotorSelect();
+        SmartDashboard.putNumber("rpm", shooter.getRpm());
         } else{
           shooter.shootspeed(0);
         }
