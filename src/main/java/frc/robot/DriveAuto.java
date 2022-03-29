@@ -29,7 +29,7 @@ public class DriveAuto extends Command {
   protected void execute() {
     double robovroom = Robot.drivetrain.getdistancetraveled();
    if(robovroom > desireddistance){
-    Robot.drivetrain.arcadeDrive( 0.05, 0.25);
+    Robot.drivetrain.arcadeDrive( 0.00, 0.25);
     SmartDashboard.getNumber("Distance Traveled", robovroom);
    } else{
      Robot.drivetrain.arcadeDrive(0, 0);

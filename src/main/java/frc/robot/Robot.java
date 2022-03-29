@@ -224,13 +224,13 @@ public class Robot extends TimedRobot {
       Shooter.shootspeed(0.35);
       } else if(distanceFromLimelightToGoalInches <= 110 &&  m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.65);
-      } else if(distanceFromLimelightToGoalInches >= 111 && distanceFromLimelightToGoalInches <=130 && m_OperateControl.getRawButton(7)){
+      } else if(distanceFromLimelightToGoalInches >= 146 && distanceFromLimelightToGoalInches <=170 && m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.70);
-      } else if(distanceFromLimelightToGoalInches >= 131 && distanceFromLimelightToGoalInches <= 150 && m_OperateControl.getRawButton(7)){
+      } else if(distanceFromLimelightToGoalInches >= 171 && distanceFromLimelightToGoalInches <= 190 && m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.75);
-      } else if(distanceFromLimelightToGoalInches >= 151 && distanceFromLimelightToGoalInches <= 170 && m_OperateControl.getRawButton(7)){
+      } else if(distanceFromLimelightToGoalInches >= 191 && distanceFromLimelightToGoalInches <= 200 && m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(0.90);
-      } else if(distanceFromLimelightToGoalInches > 171 && m_OperateControl.getRawButton(7)){
+      } else if(distanceFromLimelightToGoalInches > 201 && m_OperateControl.getRawButton(7)){
         Shooter.shootspeed(1.0);
       }  else {                                       
         Shooter.shootspeed(0);
