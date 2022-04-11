@@ -244,7 +244,7 @@ public class Robot extends TimedRobot {
         VisionPIDController.reset();
         if(m_OperateControl.getRawButton(7)){
         shooter.ShootMotorSelect();
-        SmartDashboard.putNumber("rpm", shooter.getRpm());
+        SmartDashboard.putNumber("RPM", shooter.getRpm());
         } else{
           shooter.shootspeed(0);
         }

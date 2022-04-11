@@ -30,7 +30,6 @@ public class Shooter extends Subsystem {
 double [] ShootSpeedTable = {0.70, 0.75, 0.90, 1.0, 0.35, 0.65};
 int ItemTracker = 0;
 
-
  public void SpeedSelectUp(){
    ItemTracker = (ItemTracker + 1) % ShootSpeedTable.length;
  
@@ -49,7 +48,7 @@ int ItemTracker = 0;
   }
 
   public double getRpm() {
-    return shootmotor2.getSensorCollection().getQuadratureVelocity();
+    return (shootmotor2.getSensorCollection().getQuadratureVelocity() * -1)/4;
   }
 
   public double disiredRPM = 9.5 * ShootSpeedTable[ItemTracker];

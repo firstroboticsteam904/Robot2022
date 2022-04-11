@@ -18,7 +18,7 @@ public class Auto1 extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
 addSequential(new DriveAuto(-80));
-addSequential(new ShootAuto(), 2.5);
+addSequential(new ShootAuto(), 3.5);
 addSequential(new SolenoidAuto(), 3); 
 addSequential(new StopShootAuto());
 
